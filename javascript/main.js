@@ -6,6 +6,38 @@ function setLoader(visible) {
   el.style.display = visible ? 'inline-block' : 'none';
 }
 
+function showEyes(eyes) {
+  var ctx = canvas.getContext('2d');
+  var image = new Image();
+  image.src = "/image/nc32765.png";
+  image.addEventListener('load', function(){
+    var length = Math.min(2, eyes.length);
+    for (var i = 0; i < length; i++) {
+      var rect = eyes[i];
+      var height = image.height * rect.width / image.width;
+      var y = rect.y + rect.height - height;
+      ctx.drawImage(image, rect.x, y, rect.width, height);
+    };
+  })
+}
+
+function detectEyes(image, nose_rect) {
+  new HAAR.Detector(haarcascade_eye).image(image).complete(function(){
+    if (this.objects.length > 0) {
+      alert('PUSH!!!!');
+      var eyes = this.objects;
+      canvas.onclick = function(e) {
+        if (nose_rect.x < e.offsetX &&
+          e.offsetX < nose_rect.x + nose_rect.width &&
+          nose_rect.y < e.offsetY &&
+          e.offsetY < nose_rect.y + nose_rect.height){
+            showEyes(eyes);
+          }
+      };
+    }
+  }).detect(1, 1.1, 0.1, 1, true);
+};
+
 function detectAndDraw(image) {
   new HAAR.Detector(haarcascade_mcs_nose).image(image).complete(function(){
     setLoader(false);
@@ -20,6 +52,7 @@ function detectAndDraw(image) {
       momo.addEventListener('load', function() {
         ctx.drawImage(momo, rect.x, rect.y, rect.width, rect.height);
       });
+      detectEyes(image, rect);
     } else {
       if (video) {
         capture();
