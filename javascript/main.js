@@ -19,7 +19,14 @@ function showButton() {
 };
 
 window.addEventListener('load', function() {
-  var image = new Image();
-  image.src = '/image/kanako.jpg';
-  image.addEventListener('load', showButton);
+  var fileInput = document.getElementById('file');
+  fileInput.addEventListener('change', function() {
+    reader = new FileReader();
+    reader.readAsDataURL(fileInput.files[0]);
+    reader.addEventListener('load', function() {
+      var image = new Image();
+      image.src = reader.result;
+      image.addEventListener('load', showButton);
+    });
+  });
 });
