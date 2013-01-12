@@ -24,7 +24,7 @@ function showEyes(eyes) {
 function detectEyes(image, nose_rect) {
   new HAAR.Detector(haarcascade_eye).image(image).complete(function(){
     if (this.objects.length > 0) {
-      alert('PUSH!!!!');
+      alert('PUSH!!!! 「PUSH」のボタンを押してみて');
       var eyes = this.objects;
       canvas.onclick = function(e) {
         if (nose_rect.x < e.offsetX &&
