@@ -15,9 +15,15 @@
     <video id="video" width="200" height="200" autoplay></video>
     <h1>モノノフのため遊び方</h1>
     <ol>
-      <li>画像をアップロードするか(PC、スマホ)、WebRTCを使用する(Chrome)</li>
+      <li>正面を向いた顔の画像をアップロードするか(PC、スマホ)、カメラへのアクセスを許可する(Chrome)</li>
       <li>鼻にPUSHのボタンが表示されたら成功です。されなかったらやり直して下さい</li>
-      <li>「PUSH!!!!」というウィンドウが表示されたら、PUSHボタンを押してみると・・・・・・！</li>
+      <li>「PUSH!!!!」というウィンドウが表示されたときは、鼻のボタンを押してみると・・・・・・！</li>
     </ol>
+    <h1>モノノフじゃない人向けの真面目な説明</h1>
+    <p>Haar-like特徴量というものを使った、顔のパーツ認識です。<a href="https://github.com/foo123/HAAR.js" target="_blank">HAAR.js</a>というものを使いました。OpenCVにも同じようなものが実装されているそうです(OpenCVの学習データが流用出来ます)。<br>
+    学習をJavascriptでさせるわけには行かないので、OpenCVに付属の物を使用しました。<br>
+    認識の精度が悪いですが、ちゃんと正面から向いた顔の画像にすることで、比較的ましな結果になるかと思います。このことについては、ブログで別途考察する予定です。<br>
+    ソースコード、各ライセンス等は、<a href="https://github.com/yamitzky/push_detector" target="_blank">githubのレポジトリ</a>にあります。
+    </p>
   </body>
 </html>
