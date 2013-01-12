@@ -9,8 +9,11 @@ function showButton() {
     var rect=this.objects[0];
     var rect2 = this.objects[1];
     var ctx=canvas.getContext('2d');
-    ctx.strokeStyle="rgba(0,0,0,1)";
-    ctx.strokeRect(rect.x,rect.y,rect.width,rect.height);
+    var momo = new Image();
+    momo.src = '/image/momo.png';
+    momo.addEventListener('load', function() {
+      ctx.drawImage(momo, rect.x, rect.y, rect.width, rect.height);
+    });
     //ctx.strokeRect(rect2.x,rect2.y,rect2.width,rect2.height);
   }).detect(1, 1.1, 0.1, 1, true);
 };
