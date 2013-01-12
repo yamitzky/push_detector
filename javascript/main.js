@@ -1,4 +1,5 @@
 var canvas = undefined;
+var video = undefined;
 
 function setLoader(visible) {
   var el = document.getElementById('loader');
@@ -8,38 +9,44 @@ function setLoader(visible) {
 function detectAndDraw(image) {
   new HAAR.Detector(haarcascade_mcs_nose).image(image).complete(function(){
     setLoader(false);
-    alert(this.objects.length+" Objects found");
-    var rect=this.objects[0];
-    var rect2 = this.objects[1];
+    canvas.width = image.width;
+    canvas.height = image.height;
     var ctx=canvas.getContext('2d');
-    var momo = new Image();
-    momo.src = '/image/momo.png';
-    momo.addEventListener('load', function() {
-      ctx.drawImage(momo, rect.x, rect.y, rect.width, rect.height);
-    });
+    ctx.drawImage(image,0,0);
+    if (this.objects.length > 0) {
+      var rect=this.objects[0];
+      var momo = new Image();
+      momo.src = '/image/momo.png';
+      momo.addEventListener('load', function() {
+        ctx.drawImage(momo, rect.x, rect.y, rect.width, rect.height);
+      });
+    } else {
+      if (video) {
+        capture();
+      }
+    }
   }).detect(1, 1.1, 0.1, 1, true);
 };
 
 function showButton() {
   setLoader(true);
-  canvas.width = this.width;
-  canvas.height = this.height;
-  canvas.getContext('2d').drawImage(this,0,0);
   detectAndDraw(this);
 };
 
-function loadStream(stream) {
-  var video = document.getElementById('video');
-  video.src = webkitURL.createObjectURL(stream);
+function capture() {
   var _canvas = document.createElement('canvas');
-  setTimeout(function() {
-    _canvas.width = video.videoWidth;
-    _canvas.height = video.videoHeight;
-    _canvas.getContext('2d').drawImage(video, 0, 0);
-    var captured = new Image();
-    captured.src = _canvas.toDataURL();
-    captured.addEventListener('load', showButton);
-  }, 2000);
+  _canvas.width = video.videoWidth;
+  _canvas.height = video.videoHeight;
+  _canvas.getContext('2d').drawImage(video, 0, 0);
+  var captured = new Image();
+  captured.src = _canvas.toDataURL();
+  captured.addEventListener('load', showButton);
+};
+
+function loadStream(stream) {
+  video = document.getElementById('video');
+  video.src = webkitURL.createObjectURL(stream);
+  setTimeout(capture, 2000);
 };
 
 window.addEventListener('load', function() {
