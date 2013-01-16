@@ -9,7 +9,7 @@ function setLoader(visible) {
 function showEyes(eyes) {
   var ctx = canvas.getContext('2d');
   var image = new Image();
-  image.src = "/image/nc32765.png";
+  image.src = "./image/nc32765.png";
   image.addEventListener('load', function(){
     var length = Math.min(2, eyes.length);
     for (var i = 0; i < length; i++) {
@@ -48,7 +48,7 @@ function detectAndDraw(image) {
     if (this.objects.length > 0) {
       var rect=this.objects[0];
       var momo = new Image();
-      momo.src = '/image/momo.png';
+      momo.src = './image/momo.png';
       momo.addEventListener('load', function() {
         ctx.drawImage(momo, rect.x, rect.y, rect.width, rect.height);
       });
